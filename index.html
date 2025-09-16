@@ -256,6 +256,10 @@
     background-color: #ffebee !important;
     border: 2px solid #c5221f !important;
   }
+  .deducted-amount {
+    color: #c5221f;
+    font-weight: bold;
+  }
 </style>
 </head>
 <body>
@@ -306,8 +310,8 @@
         <div class="value" id="totalAmount">$0.00</div>
       </div>
       <div class="summary-card">
-        <h4>Number of Records</h4>
-        <div class="value" id="recordCount">0</div>
+        <h4>Amount - Deducted</h4>
+        <div class="value deducted-amount" id="deductedAmount">$0.00</div>
       </div>
       <div class="summary-card">
         <h4>Average per Record</h4>
@@ -430,8 +434,8 @@
         <div class="value" id="weekTotal">$0.00</div>
       </div>
       <div class="summary-card">
-        <h4>Number of Records</h4>
-        <div class="value" id="weekRecordCount">0</div>
+        <h4>Amount - Deducted</h4>
+        <div class="value deducted-amount" id="weekDeducted">$0.00</div>
       </div>
       <div class="summary-card">
         <h4>Average per Record</h4>
@@ -731,8 +735,8 @@
   // Calculate total payout
   function calculateTotal() {
     let total = 0;
-    let positiveCount = 0;
-    let negativeCount = 0;
+    let deducted = 0;
+    let recordCount = 0;
     
     tableBody.querySelectorAll('tr').forEach(row => {
       const amountText = row.cells[4].innerText;
@@ -740,11 +744,12 @@
       
       if (amount < 0) {
         total += amount;
-        negativeCount++;
+        deducted += Math.abs(amount);
       } else {
         total += amount;
-        positiveCount++;
       }
+      
+      recordCount++;
     });
     
     const totalElement = document.getElementById('totalAmount');
@@ -758,6 +763,10 @@
       totalElement.className = 'value positive';
     }
     
+    // Update deducted amount
+    const deductedElement = document.getElementById('deductedAmount');
+    deductedElement.innerText = `$${formatNumber(deducted)}`;
+    
     updateSummary();
   }
   
@@ -765,9 +774,8 @@
   function updateSummary(count = null) {
     const rows = tableBody.querySelectorAll('tr');
     let total = 0;
+    let deducted = 0;
     let recordCount = count || 0;
-    let positiveCount = 0;
-    let negativeCount = 0;
     
     rows.forEach(row => {
       if (row.style.display !== 'none') {
@@ -776,10 +784,9 @@
         
         if (amount < 0) {
           total += amount;
-          negativeCount++;
+          deducted += Math.abs(amount);
         } else {
           total += amount;
-          positiveCount++;
         }
         
         recordCount++;
@@ -796,6 +803,10 @@
     } else {
       totalElement.className = 'value positive';
     }
+    
+    // Update deducted amount
+    const deductedElement = document.getElementById('deductedAmount');
+    deductedElement.innerText = `$${formatNumber(deducted)}`;
     
     document.getElementById('recordCount').innerText = recordCount;
     
@@ -1055,6 +1066,7 @@
     
     // Calculate month totals
     let monthTotal = 0;
+    let monthDeducted = 0;
     let positiveCount = 0;
     let negativeCount = 0;
     
@@ -1062,6 +1074,7 @@
       const amount = parseAmount(item.amount);
       if (amount < 0) {
         monthTotal += amount;
+        monthDeducted += Math.abs(amount);
         negativeCount++;
       } else {
         monthTotal += amount;
@@ -1079,8 +1092,8 @@
         </div>
       </div>
       <div class="summary-card">
-        <h4>Number of Records</h4>
-        <div class="value">${monthRows.length}</div>
+        <h4>Amount - Deducted</h4>
+        <div class="value deducted-amount">$${formatNumber(monthDeducted)}</div>
       </div>
       <div class="summary-card">
         <h4>Average per Record</h4>
@@ -1215,6 +1228,7 @@
     
     // Calculate ID totals
     let idTotal = 0;
+    let idDeducted = 0;
     let positiveCount = 0;
     let negativeCount = 0;
     
@@ -1222,6 +1236,7 @@
       const amount = parseAmount(item.amount);
       if (amount < 0) {
         idTotal += amount;
+        idDeducted += Math.abs(amount);
         negativeCount++;
       } else {
         idTotal += amount;
@@ -1241,8 +1256,8 @@
           </span>
         </div>
         <div class="id-details">
-          <span>Records:</span>
-          <span>${idRows.length}</span>
+          <span>Amount - Deducted:</span>
+          <span class="deducted-amount">$${formatNumber(idDeducted)}</span>
         </div>
         <div class="id-details">
           <span>Average:</span>
@@ -1301,6 +1316,7 @@
     
     // Calculate week totals
     let weekTotal = 0;
+    let weekDeducted = 0;
     let positiveCount = 0;
     let negativeCount = 0;
     
@@ -1308,6 +1324,7 @@
       const amount = parseAmount(item.amount);
       if (amount < 0) {
         weekTotal += amount;
+        weekDeducted += Math.abs(amount);
         negativeCount++;
       } else {
         weekTotal += amount;
@@ -1320,6 +1337,10 @@
     document.getElementById('weekTotal').innerText = weekTotal < 0 ? 
       `($${formatNumber(Math.abs(weekTotal))})` : 
       `$${formatNumber(weekTotal)}`;
+    
+    // Update deducted amount
+    const weekDeductedElement = document.getElementById('weekDeducted');
+    weekDeductedElement.innerText = `$${formatNumber(weekDeducted)}`;
     
     document.getElementById('weekRecordCount').innerText = weekRows.length;
     
