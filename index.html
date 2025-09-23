@@ -188,66 +188,6 @@
     background-color: #1a73e8;
     color: white;
   }
-  .id-summary {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  .id-card {
-    flex: 1;
-    min-width: 250px;
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  .id-card h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #1a73e8;
-  }
-  .id-details {
-    display: flex;
-    justify-content: space-between;
-  }
-  .month-calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-top: 20px;
-  }
-  .calendar-day {
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .calendar-day.has-data {
-    background-color: #e8f0fe;
-    color: #1a73e8;
-    font-weight: bold;
-  }
-  .calendar-day.has-negative {
-    background-color: #ffebee;
-    color: #c5221f;
-    font-weight: bold;
-  }
-  .calendar-day.selected {
-    background-color: #1a73e8;
-    color: white;
-  }
-  .calendar-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-bottom: 10px;
-  }
-  .calendar-header div {
-    text-align: center;
-    font-weight: bold;
-  }
   .negative-amount {
     color: #c5221f;
     font-weight: bold;
@@ -260,6 +200,36 @@
     color: #c5221f;
     font-weight: bold;
   }
+  .search-box {
+    margin-bottom: 20px;
+  }
+  .search-box input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+    }
+    .summary-cards {
+      flex-direction: column;
+    }
+    .filters {
+      flex-direction: column;
+    }
+    .filter-group {
+      min-width: 100%;
+    }
+    .week-selector {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .week-btn {
+      margin-bottom: 10px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -271,13 +241,15 @@
   
   <div class="view-tabs">
     <button class="view-tab active" onclick="switchView('all')">All Data</button>
-    <button class="view-tab" onclick="switchView('month')">Monthly View</button>
-    <button class="view-tab" onclick="switchView('id')">By ID</button>
     <button class="view-tab" onclick="switchView('week')">Weekly View</button>
   </div>
   
   <!-- All Data View -->
   <div id="allView" class="view-content active">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search by ID, type, or date..." onkeyup="searchData()">
+    </div>
+    
     <div class="filters">
       <div class="filter-group">
         <label>From Date:</label>
@@ -317,6 +289,10 @@
         <h4>Average per Record</h4>
         <div class="value" id="avgAmount">$0.00</div>
       </div>
+      <div class="summary-card">
+        <h4>Record Count</h4>
+        <div class="value" id="recordCount">0</div>
+      </div>
     </div>
     
     <div class="action-buttons">
@@ -343,83 +319,6 @@
     </table>
   </div>
   
-  <!-- Monthly View -->
-  <div id="monthView" class="view-content">
-    <div class="filters">
-      <div class="filter-group">
-        <label>Select Month:</label>
-        <select id="monthSelect" onchange="showMonthView()">
-          <option value="2025-01">January 2025</option>
-          <option value="2025-02">February 2025</option>
-          <option value="2025-03">March 2025</option>
-          <option value="2025-04">April 2025</option>
-          <option value="2025-05">May 2025</option>
-          <option value="2025-06">June 2025</option>
-          <option value="2025-07">July 2025</option>
-          <option value="2025-08">August 2025</option>
-          <option value="2025-09">September 2025</option>
-          <option value="2025-10">October 2025</option>
-          <option value="2025-11">November 2025</option>
-          <option value="2025-12">December 2025</option>
-        </select>
-      </div>
-    </div>
-    
-    <div id="monthSummary" class="summary-cards">
-      <!-- Monthly summary will appear here -->
-    </div>
-    
-    <div id="monthCalendar" class="month-calendar">
-      <!-- Calendar will appear here -->
-    </div>
-    
-    <table id="monthTable">
-      <thead>
-        <tr>
-          <th>Billable Type</th>
-          <th>Billable ID</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Net Payout Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Monthly data rows will appear here -->
-      </tbody>
-    </table>
-  </div>
-  
-  <!-- By ID View -->
-  <div id="idView" class="view-content">
-    <div class="filters">
-      <div class="filter-group">
-        <label>Select Billable ID:</label>
-        <select id="idSelect" onchange="showIdView()">
-          <option value="">Select ID</option>
-        </select>
-      </div>
-    </div>
-    
-    <div id="idSummary" class="id-summary">
-      <!-- ID summary cards will appear here -->
-    </div>
-    
-    <table id="idTable">
-      <thead>
-        <tr>
-          <th>Billable Type</th>
-          <th>Billable ID</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Net Payout Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- ID data rows will appear here -->
-      </tbody>
-    </table>
-  </div>
-  
   <!-- Weekly View -->
   <div id="weekView" class="view-content">
     <div class="week-selector">
@@ -440,6 +339,10 @@
       <div class="summary-card">
         <h4>Average per Record</h4>
         <div class="value" id="weekAvg">$0.00</div>
+      </div>
+      <div class="summary-card">
+        <h4>Record Count</h4>
+        <div class="value" id="weekRecordCount">0</div>
       </div>
     </div>
     
@@ -713,6 +616,21 @@
       return false;
     }
     
+    // Validate dates are reasonable (not too far in the past or future)
+    const today = new Date();
+    const minDate = new Date();
+    minDate.setFullYear(today.getFullYear() - 5); // 5 years ago
+    const maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() + 1); // 1 year from now
+    
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    if (start < minDate || end > maxDate) {
+      showMessage('Dates must be within reasonable range', 'error');
+      return false;
+    }
+    
     return true;
   }
   
@@ -767,6 +685,9 @@
     const deductedElement = document.getElementById('deductedAmount');
     deductedElement.innerText = `$${formatNumber(deducted)}`;
     
+    // Update record count
+    document.getElementById('recordCount').innerText = recordCount;
+    
     updateSummary();
   }
   
@@ -808,6 +729,7 @@
     const deductedElement = document.getElementById('deductedAmount');
     deductedElement.innerText = `$${formatNumber(deducted)}`;
     
+    // Update record count
     document.getElementById('recordCount').innerText = recordCount;
     
     const avgElement = document.getElementById('avgAmount');
@@ -996,17 +918,43 @@
     updateSummary(filteredCount);
   }
   
+  // Search data
+  function searchData() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const rows = tableBody.querySelectorAll('tr');
+    let filteredCount = 0;
+    
+    rows.forEach(row => {
+      const id = row.cells[1].innerText.toLowerCase();
+      const type = row.cells[0].innerText.toLowerCase();
+      const startDate = row.cells[2].innerText.toLowerCase();
+      const endDate = row.cells[3].innerText.toLowerCase();
+      
+      let showRow = false;
+      
+      if (id.includes(searchTerm) || 
+          type.includes(searchTerm) || 
+          startDate.includes(searchTerm) || 
+          endDate.includes(searchTerm)) {
+        showRow = true;
+      }
+      
+      row.style.display = showRow ? '' : 'none';
+      if (showRow) filteredCount++;
+    });
+    
+    updateSummary(filteredCount);
+  }
+  
   // Populate ID filter
   function populateIdFilter() {
     const idFilter = document.getElementById('filterId');
-    const idSelect = document.getElementById('idSelect');
     
     // Get unique IDs
     const ids = [...new Set(allData.map(item => item.id))];
     
     // Clear existing options
     idFilter.innerHTML = '<option value="">All IDs</option>';
-    idSelect.innerHTML = '<option value="">Select ID</option>';
     
     // Add options
     ids.forEach(id => {
@@ -1014,11 +962,6 @@
       option1.value = id;
       option1.textContent = id;
       idFilter.appendChild(option1);
-      
-      const option2 = document.createElement('option');
-      option2.value = id;
-      option2.textContent = id;
-      idSelect.appendChild(option2);
     });
   }
   
@@ -1039,260 +982,11 @@
       case 'all':
         document.getElementById('allView').classList.add('active');
         break;
-      case 'month':
-        document.getElementById('monthView').classList.add('active');
-        showMonthView();
-        break;
-      case 'id':
-        document.getElementById('idView').classList.add('active');
-        break;
       case 'week':
         document.getElementById('weekView').classList.add('active');
         showWeekView();
         break;
     }
-  }
-  
-  // Show monthly view
-  function showMonthView() {
-    const selectedMonth = document.getElementById('monthSelect').value;
-    const [year, month] = selectedMonth.split('-');
-    
-    // Filter data for the selected month
-    const monthRows = allData.filter(item => {
-      const itemDate = new Date(item.start);
-      return itemDate.getFullYear() === parseInt(year) && itemDate.getMonth() + 1 === parseInt(month);
-    });
-    
-    // Calculate month totals
-    let monthTotal = 0;
-    let monthDeducted = 0;
-    let positiveCount = 0;
-    let negativeCount = 0;
-    
-    monthRows.forEach(item => {
-      const amount = parseAmount(item.amount);
-      if (amount < 0) {
-        monthTotal += amount;
-        monthDeducted += Math.abs(amount);
-        negativeCount++;
-      } else {
-        monthTotal += amount;
-        positiveCount++;
-      }
-    });
-    
-    // Update month summary
-    const monthSummary = document.getElementById('monthSummary');
-    monthSummary.innerHTML = `
-      <div class="summary-card">
-        <h4>Month Total</h4>
-        <div class="value ${monthTotal < 0 ? 'negative' : 'positive'}">
-          ${monthTotal < 0 ? `($${formatNumber(Math.abs(monthTotal))})` : `$${formatNumber(monthTotal)}`}
-        </div>
-      </div>
-      <div class="summary-card">
-        <h4>Amount - Deducted</h4>
-        <div class="value deducted-amount">$${formatNumber(monthDeducted)}</div>
-      </div>
-      <div class="summary-card">
-        <h4>Average per Record</h4>
-        <div class="value ${monthRows.length > 0 && monthTotal/monthRows.length < 0 ? 'negative' : 'positive'}">
-          ${monthRows.length > 0 ? 
-            (monthTotal/monthRows.length < 0 ? 
-              `($${formatNumber(Math.abs(monthTotal/monthRows.length))})` : 
-              `$${formatNumber(monthTotal/monthRows.length)}`) 
-            : '$0.00'}
-        </div>
-      </div>
-    `;
-    
-    // Update month table
-    const monthTableBody = document.querySelector('#monthTable tbody');
-    monthTableBody.innerHTML = '';
-    
-    monthRows.forEach(item => {
-      const row = monthTableBody.insertRow();
-      row.insertCell(0).innerText = item.type;
-      row.insertCell(1).innerText = item.id;
-      row.insertCell(2).innerText = item.start;
-      row.insertCell(3).innerText = item.end;
-      
-      // Format amount with proper color
-      const amountCell = row.insertCell(4);
-      const amountValue = parseAmount(item.amount);
-      if (amountValue < 0) {
-        amountCell.classList.add('negative-amount');
-        amountCell.innerText = `($${formatNumber(Math.abs(amountValue))})`;
-      } else {
-        amountCell.innerText = `$${formatNumber(amountValue)}`;
-      }
-    });
-    
-    // Generate calendar
-    generateCalendar(year, month, monthRows);
-  }
-  
-  // Generate calendar
-  function generateCalendar(year, month, data) {
-    const monthCalendar = document.getElementById('monthCalendar');
-    const calendarHeader = document.createElement('div');
-    calendarHeader.className = 'calendar-header';
-    
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    days.forEach(day => {
-      const div = document.createElement('div');
-      div.textContent = day;
-      calendarHeader.appendChild(div);
-    });
-    
-    monthCalendar.innerHTML = '';
-    monthCalendar.appendChild(calendarHeader);
-    
-    // Get first day of month and number of days
-    const firstDay = new Date(year, month - 1, 1).getDay();
-    const daysInMonth = new Date(year, month, 0).getDate();
-    
-    // Create empty cells for days before the first day
-    for (let i = 0; i < firstDay; i++) {
-      const emptyDay = document.createElement('div');
-      emptyDay.className = 'calendar-day';
-      monthCalendar.appendChild(emptyDay);
-    }
-    
-    // Create cells for each day
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dayDiv = document.createElement('div');
-      dayDiv.className = 'calendar-day';
-      dayDiv.textContent = day;
-      
-      // Check if there's data for this day
-      const dateStr = `${year}-${month.padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-      const dayData = data.filter(item => item.start === dateStr);
-      
-      if (dayData.length > 0) {
-        // Check if any amounts are negative
-        const hasNegative = dayData.some(item => parseAmount(item.amount) < 0);
-        if (hasNegative) {
-          dayDiv.classList.add('has-negative');
-        } else {
-          dayDiv.classList.add('has-data');
-        }
-        
-        dayDiv.onclick = function() {
-          // Filter data for this day
-          showDayDetails(dayData, dateStr);
-        };
-      }
-      
-      monthCalendar.appendChild(dayDiv);
-    }
-  }
-  
-  // Show day details
-  function showDayDetails(rows, date) {
-    const monthTableBody = document.querySelector('#monthTable tbody');
-    monthTableBody.innerHTML = '';
-    
-    rows.forEach(item => {
-      const row = monthTableBody.insertRow();
-      row.insertCell(0).innerText = item.type;
-      row.insertCell(1).innerText = item.id;
-      row.insertCell(2).innerText = item.start;
-      row.insertCell(3).innerText = item.end;
-      
-      // Format amount with proper color
-      const amountCell = row.insertCell(4);
-      const amountValue = parseAmount(item.amount);
-      if (amountValue < 0) {
-        amountCell.classList.add('negative-amount');
-        amountCell.innerText = `($${formatNumber(Math.abs(amountValue))})`;
-      } else {
-        amountCell.innerText = `$${formatNumber(amountValue)}`;
-      }
-    });
-  }
-  
-  // Show ID view
-  function showIdView() {
-    const selectedId = document.getElementById('idSelect').value;
-    
-    if (!selectedId) {
-      document.getElementById('idSummary').innerHTML = '';
-      document.querySelector('#idTable tbody').innerHTML = '';
-      return;
-    }
-    
-    // Filter data for the selected ID
-    const idRows = allData.filter(item => item.id === selectedId);
-    
-    // Calculate ID totals
-    let idTotal = 0;
-    let idDeducted = 0;
-    let positiveCount = 0;
-    let negativeCount = 0;
-    
-    idRows.forEach(item => {
-      const amount = parseAmount(item.amount);
-      if (amount < 0) {
-        idTotal += amount;
-        idDeducted += Math.abs(amount);
-        negativeCount++;
-      } else {
-        idTotal += amount;
-        positiveCount++;
-      }
-    });
-    
-    // Update ID summary
-    const idSummary = document.getElementById('idSummary');
-    idSummary.innerHTML = `
-      <div class="id-card">
-        <h4>Billable ID: ${selectedId}</h4>
-        <div class="id-details">
-          <span>Total:</span>
-          <span class="${idTotal < 0 ? 'negative' : 'positive'}">
-            ${idTotal < 0 ? `($${formatNumber(Math.abs(idTotal))})` : `$${formatNumber(idTotal)}`}
-          </span>
-        </div>
-        <div class="id-details">
-          <span>Amount - Deducted:</span>
-          <span class="deducted-amount">$${formatNumber(idDeducted)}</span>
-        </div>
-        <div class="id-details">
-          <span>Average:</span>
-          <span class="${idRows.length > 0 && idTotal/idRows.length < 0 ? 'negative' : ''}">
-            ${idRows.length > 0 ? 
-              (idTotal/idRows.length < 0 ? 
-                `($${formatNumber(Math.abs(idTotal/idRows.length))})` : 
-                `$${formatNumber(idTotal/idRows.length)}`) 
-              : '$0.00'}
-          </span>
-        </div>
-      </div>
-    `;
-    
-    // Update ID table
-    const idTableBody = document.querySelector('#idTable tbody');
-    idTableBody.innerHTML = '';
-    
-    idRows.forEach(item => {
-      const row = idTableBody.insertRow();
-      row.insertCell(0).innerText = item.type;
-      row.insertCell(1).innerText = item.id;
-      row.insertCell(2).innerText = item.start;
-      row.insertCell(3).innerText = item.end;
-      
-      // Format amount with proper color
-      const amountCell = row.insertCell(4);
-      const amountValue = parseAmount(item.amount);
-      if (amountValue < 0) {
-        amountCell.classList.add('negative-amount');
-        amountCell.innerText = `($${formatNumber(Math.abs(amountValue))})`;
-      } else {
-        amountCell.innerText = `$${formatNumber(amountValue)}`;
-      }
-    });
   }
   
   // Show weekly view
@@ -1342,6 +1036,7 @@
     const weekDeductedElement = document.getElementById('weekDeducted');
     weekDeductedElement.innerText = `$${formatNumber(weekDeducted)}`;
     
+    // Update record count
     document.getElementById('weekRecordCount').innerText = weekRows.length;
     
     const weekAvg = weekRows.length > 0 ? weekTotal / weekRows.length : 0;
