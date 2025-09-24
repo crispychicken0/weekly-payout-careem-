@@ -529,6 +529,161 @@
     font-weight: bold;
   }
   
+  /* Adjustment Type Styles */
+  .adjustment-badge {
+    background-color: #ea4335;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+  .adjustment-row {
+    background-color: #fce8e6;
+  }
+  .adjustment-card {
+    border-left: 3px solid #ea4335;
+  }
+  .adjustment-card h4 {
+    color: #ea4335;
+  }
+  
+  /* Daily Adjustments Report Styles */
+  .daily-adjustments-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ea4335;
+  }
+  .daily-adjustments-header h2 {
+    color: #ea4335;
+    margin-bottom: 5px;
+  }
+  .daily-adjustments-overview {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  .daily-adjustments-card {
+    flex: 1;
+    min-width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #ea4335;
+  }
+  .daily-adjustments-card h3 {
+    margin-top: 0;
+    color: #ea4335;
+    font-size: 1.1em;
+  }
+  .daily-adjustments-card .value {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #ea4335;
+  }
+  .daily-adjustments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  .daily-adjustments-table th, .daily-adjustments-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  .daily-adjustments-table th {
+    background-color: #f8f9fa;
+    color: #202124;
+    font-weight: 600;
+  }
+  .daily-adjustments-table tr:hover {
+    background-color: #f5f5f5;
+  }
+  .id-section {
+    margin-bottom: 30px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .id-header {
+    background-color: #fce8e6;
+    padding: 15px;
+    border-bottom: 1px solid #dadce0;
+  }
+  .id-header h3 {
+    margin: 0;
+    color: #ea4335;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .id-content {
+    padding: 20px;
+  }
+  .day-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+  .day-table th, .day-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  .day-table th {
+    background-color: #f8f9fa;
+    color: #202124;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+  .day-table td {
+    font-size: 0.9em;
+  }
+  .day-summary {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+  }
+  .day-summary h4 {
+    margin-top: 0;
+    color: #ea4335;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  .day-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .day-summary-row:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 2px solid #ddd;
+  }
+  .day-summary-label {
+    font-weight: 500;
+  }
+  .day-summary-value {
+    font-weight: bold;
+  }
+  
+  .debug-info {
+    background-color: #e8f0fe;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+  
   @media (max-width: 768px) {
     .form-row {
       flex-direction: column;
@@ -578,9 +733,18 @@
     .branch-summary-value {
       margin-top: 5px;
     }
+    .daily-adjustments-overview {
+      flex-direction: column;
+    }
+    .day-summary-row {
+      flex-direction: column;
+    }
+    .day-summary-value {
+      margin-top: 5px;
+    }
   }
   @media print {
-    .action-buttons, .view-tabs, .import-section, form, .search-box, .filters, .report-date-filters {
+    .action-buttons, .view-tabs, .import-section, form, .search-box, .filters, .report-date-filters, .debug-info {
       display: none;
     }
     .container {
@@ -632,6 +796,43 @@
     .branch-summary-section h4 {
       color: #000;
     }
+    .adjustment-badge {
+      background-color: #000;
+    }
+    .adjustment-row {
+      background-color: #f8f9fa;
+    }
+    .adjustment-card {
+      border-left: 3px solid #000;
+    }
+    .adjustment-card h4 {
+      color: #000;
+    }
+    .daily-adjustments-header {
+      border-bottom: 2px solid #000;
+    }
+    .daily-adjustments-header h2 {
+      color: #000;
+    }
+    .daily-adjustments-card {
+      border-left: 4px solid #000;
+    }
+    .daily-adjustments-card h3 {
+      color: #000;
+    }
+    .daily-adjustments-card .value {
+      color: #000;
+    }
+    .id-header {
+      background-color: #f8f9fa;
+      border-color: #ddd;
+    }
+    .id-header h3 {
+      color: #000;
+    }
+    .day-summary h4 {
+      color: #000;
+    }
   }
 </style>
 </head>
@@ -646,6 +847,7 @@
     <button class="view-tab active" onclick="switchView('all')">All Data</button>
     <button class="view-tab" onclick="switchView('week')">Weekly View</button>
     <button class="view-tab" onclick="switchView('report')">Report</button>
+    <button class="view-tab" onclick="switchView('adjustments')">Adjustments Report</button>
   </div>
   
   <!-- All Data View -->
@@ -676,6 +878,7 @@
           <option value="MERCHANT">MERCHANT</option>
           <option value="DRIVER">DRIVER</option>
           <option value="PARTNER">PARTNER</option>
+          <option value="ADJUSTMENT">ADJUSTMENT</option>
         </select>
       </div>
     </div>
@@ -873,6 +1076,68 @@
     </div>
   </div>
   
+  <!-- Adjustments Report View -->
+  <div id="adjustmentsView" class="view-content">
+    <div class="action-buttons">
+      <button onclick="window.print()">Print Report</button>
+      <button onclick="exportAdjustmentsToCSV()">Export Adjustments</button>
+    </div>
+    
+    <div class="report-date-filters">
+      <div class="date-filter-group">
+        <label>From Date:</label>
+        <input type="date" id="adjustmentsFromDate" onchange="updateAdjustmentsView()">
+      </div>
+      <div class="date-filter-group">
+        <label>To Date:</label>
+        <input type="date" id="adjustmentsToDate" onchange="updateAdjustmentsView()">
+      </div>
+      <div class="date-filter-group">
+        <label>&nbsp;</label>
+        <button class="secondary-btn" onclick="clearAdjustmentsDateFilters()">Clear Filters</button>
+      </div>
+    </div>
+    
+    <div class="daily-adjustments-header">
+      <h2>Daily Adjustments Report</h2>
+      <div class="report-date" id="adjustmentsDate">Generated on: </div>
+      <div class="report-date-range" id="adjustmentsDateRange">Date Range: All Records</div>
+    </div>
+    
+    <div class="daily-adjustments-overview">
+      <div class="daily-adjustments-card">
+        <h3>Total Adjustments</h3>
+        <div class="value" id="totalAdjustments">$0.00</div>
+        <div>Total amount of adjustments</div>
+      </div>
+      <div class="daily-adjustments-card">
+        <h3>Unique IDs</h3>
+        <div class="value" id="uniqueIDs">0</div>
+        <div>Number of unique IDs with adjustments</div>
+      </div>
+      <div class="daily-adjustments-card">
+        <h3>Average per ID</h3>
+        <div class="value" id="avgPerID">$0.00</div>
+        <div>Average adjustment amount per ID</div>
+      </div>
+      <div class="daily-adjustments-card">
+        <h3>Adjustment Days</h3>
+        <div class="value" id="adjustmentDays">0</div>
+        <div>Number of days with adjustments</div>
+      </div>
+    </div>
+    
+    <div id="debugInfo" class="debug-info"></div>
+    
+    <div id="dailyAdjustmentsContainer">
+      <!-- Daily adjustments by ID will appear here -->
+    </div>
+    
+    <div class="report-footer">
+      <p>End of Adjustments Report</p>
+    </div>
+  </div>
+  
   <h3>Add / Update Week Data</h3>
   <form id="payoutForm">
     <div class="form-row">
@@ -883,6 +1148,7 @@
             <option value="MERCHANT">MERCHANT</option>
             <option value="DRIVER">DRIVER</option>
             <option value="PARTNER">PARTNER</option>
+            <option value="ADJUSTMENT">ADJUSTMENT</option>
           </select>
         </div>
       </div>
@@ -924,6 +1190,14 @@
     <div>
       <button onclick="importData()">Import Data</button>
       <button class="secondary-btn" onclick="document.getElementById('importData').value = ''">Clear</button>
+    </div>
+    
+    <h4>Sample Data (Click to load):</h4>
+    <div style="margin-top: 10px;">
+      <button onclick="loadSampleData('merchant')">Load Merchant Sample</button>
+      <button onclick="loadSampleData('driver')">Load Driver Sample</button>
+      <button onclick="loadSampleData('adjustment')">Load Adjustment Sample</button>
+      <button onclick="loadSampleData('mixed')">Load Mixed Sample</button>
     </div>
   </div>
 </div>
@@ -978,6 +1252,19 @@
     return `${start} - ${end}`;
   }
   
+  // Format date as YYYY-MM-DD
+  function formatDate(date) {
+    const d = new Date(date);
+    return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
+  }
+  
+  // Get day name from date
+  function getDayName(dateStr) {
+    const date = new Date(dateStr);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+  }
+  
   // Load data on page load
   window.onload = function() {
     loadData();
@@ -1028,6 +1315,11 @@
           amountCell.innerText = `($${formatNumber(Math.abs(amountValue))})`;
         } else {
           amountCell.innerText = `$${formatNumber(amountValue)}`;
+        }
+        
+        // Apply special styling for ADJUSTMENT type
+        if (item.type === 'ADJUSTMENT') {
+          row.classList.add('adjustment-row');
         }
         
         const deleteCell = row.insertCell(6);
@@ -1100,6 +1392,11 @@
         amountCell.innerText = `$${formatNumber(amount)}`;
       }
       
+      // Apply special styling for ADJUSTMENT type
+      if (type === 'ADJUSTMENT') {
+        row.classList.add('adjustment-row');
+      }
+      
       row.insertCell(5).innerText = 'New';
       amountCell.classList.add('highlight');
       setTimeout(() => removeHighlight(amountCell), 3000);
@@ -1123,6 +1420,7 @@
     calculateTotal();
     populateIdFilter();
     updateReportView();
+    updateAdjustmentsView();
   }
   
   // Validate form
@@ -1316,6 +1614,53 @@
     showMessage('Report exported successfully!', 'success');
   }
   
+  // Export adjustments to CSV
+  function exportAdjustmentsToCSV() {
+    let csv = 'ID,Date,Day,Adjustment Amount\n';
+    
+    // Get all adjustment records
+    const adjustmentRecords = allData.filter(item => item.type.trim().toUpperCase() === 'ADJUSTMENT');
+    
+    // Group by ID and date
+    const idDateGroups = {};
+    
+    adjustmentRecords.forEach(record => {
+      const amount = parseAmount(record.amount);
+      if (amount >= 0) return; // Skip positive amounts
+      
+      const id = record.id;
+      const date = record.start;
+      
+      if (!idDateGroups[id]) {
+        idDateGroups[id] = {};
+      }
+      
+      if (!idDateGroups[id][date]) {
+        idDateGroups[id][date] = 0;
+      }
+      
+      idDateGroups[id][date] += Math.abs(amount);
+    });
+    
+    // Add rows to CSV
+    Object.keys(idDateGroups).sort((a, b) => parseInt(a) - parseInt(b)).forEach(id => {
+      Object.keys(idDateGroups[id]).sort().forEach(date => {
+        const amount = idDateGroups[id][date];
+        const dayName = getDayName(date);
+        csv += `${id},${date},${dayName},${amount}\n`;
+      });
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'careem_adjustments_report.csv';
+    a.click();
+    
+    showMessage('Adjustments report exported successfully!', 'success');
+  }
+  
   // Delete row
   function deleteRow(row) {
     row.remove();
@@ -1325,6 +1670,7 @@
     showMessage('Record deleted successfully!', 'success');
     populateIdFilter();
     updateReportView();
+    updateAdjustmentsView();
   }
   
   // Clear all data
@@ -1337,6 +1683,7 @@
       showMessage('All data cleared successfully!', 'success');
       populateIdFilter();
       updateReportView();
+      updateAdjustmentsView();
     }
   }
   
@@ -1345,6 +1692,123 @@
     document.getElementById('reportFromDate').value = '';
     document.getElementById('reportToDate').value = '';
     updateReportView();
+  }
+  
+  // Clear adjustments date filters
+  function clearAdjustmentsDateFilters() {
+    document.getElementById('adjustmentsFromDate').value = '';
+    document.getElementById('adjustmentsToDate').value = '';
+    updateAdjustmentsView();
+  }
+  
+  // Load sample data
+  function loadSampleData(type) {
+    let sampleData = '';
+    
+    switch(type) {
+      case 'merchant':
+        sampleData = `Billable Type\tBillable ID\tStart Date\tEnd Date\tNet Payout Amount\tAction
+MERCHANT\t1001\t2023-01-01\t2023-01-07\t1250.50\tNew
+MERCHANT\t1001\t2023-01-08\t2023-01-14\t1180.75\tNew
+MERCHANT\t1001\t2023-01-15\t2023-01-21\t1320.25\tNew
+MERCHANT\t1001\t2023-01-22\t2023-01-28\t1195.40\tNew
+MERCHANT\t1001\t2023-01-29\t2023-02-04\t1280.60\tNew
+MERCHANT\t1001\t2023-02-05\t2023-02-11\t1350.80\tNew
+MERCHANT\t1001\t2023-02-12\t2023-02-18\t1420.30\tNew
+MERCHANT\t1002\t2023-01-01\t2023-01-07\t980.40\tNew
+MERCHANT\t1002\t2023-01-08\t2023-01-14\t1020.60\tNew
+MERCHANT\t1002\t2023-01-15\t2023-01-21\t950.30\tNew
+MERCHANT\t1002\t2023-01-22\t2023-01-28\t1100.20\tNew
+MERCHANT\t1002\t2023-01-29\t2023-02-04\t1050.70\tNew
+MERCHANT\t1002\t2023-02-05\t2023-02-11\t980.90\tNew
+MERCHANT\t1002\t2023-02-12\t2023-02-18\t1120.40\tNew`;
+        break;
+        
+      case 'driver':
+        sampleData = `Billable Type\tBillable ID\tStart Date\tEnd Date\tNet Payout Amount\tAction
+DRIVER\t2001\t2023-01-01\t2023-01-07\t450.25\tNew
+DRIVER\t2001\t2023-01-08\t2023-01-14\t480.60\tNew
+DRIVER\t2001\t2023-01-15\t2023-01-21\t520.30\tNew
+DRIVER\t2001\t2023-01-22\t2023-01-28\t490.75\tNew
+DRIVER\t2001\t2023-01-29\t2023-02-04\t510.40\tNew
+DRIVER\t2001\t2023-02-05\t2023-02-11\t530.20\tNew
+DRIVER\t2001\t2023-02-12\t2023-02-18\t550.80\tNew
+DRIVER\t2002\t2023-01-01\t2023-01-07\t420.50\tNew
+DRIVER\t2002\t2023-01-08\t2023-01-14\t440.30\tNew
+DRIVER\t2002\t2023-01-15\t2023-01-21\t460.70\tNew
+DRIVER\t2002\t2023-01-22\t2023-01-28\t430.90\tNew
+DRIVER\t2002\t2023-01-29\t2023-02-04\t450.60\tNew
+DRIVER\t2002\t2023-02-05\t2023-02-11\t470.40\tNew
+DRIVER\t2002\t2023-02-12\t2023-02-18\t490.20\tNew`;
+        break;
+        
+      case 'adjustment':
+        sampleData = `Billable Type\tBillable ID\tStart Date\tEnd Date\tNet Payout Amount\tAction
+ADJUSTMENT\t3001\t2023-01-01\t2023-01-01\t-120.50\tClawback
+ADJUSTMENT\t3001\t2023-01-02\t2023-01-02\t-85.25\tClawback
+ADJUSTMENT\t3001\t2023-01-03\t2023-01-03\t-95.40\tClawback
+ADJUSTMENT\t3001\t2023-01-04\t2023-01-04\t-110.30\tClawback
+ADJUSTMENT\t3001\t2023-01-05\t2023-01-05\t-75.60\tClawback
+ADJUSTMENT\t3001\t2023-01-06\t2023-01-06\t-90.80\tClawback
+ADJUSTMENT\t3001\t2023-01-07\t2023-01-07\t-105.20\tClawback
+ADJUSTMENT\t3002\t2023-01-01\t2023-01-01\t-65.40\tClawback
+ADJUSTMENT\t3002\t2023-01-02\t2023-01-02\t-70.60\tClawback
+ADJUSTMENT\t3002\t2023-01-03\t2023-01-03\t-55.30\tClawback
+ADJUSTMENT\t3002\t2023-01-04\t2023-01-04\t-80.20\tClawback
+ADJUSTMENT\t3002\t2023-01-05\t2023-01-05\t-60.70\tClawback
+ADJUSTMENT\t3002\t2023-01-06\t2023-01-06\t-75.90\tClawback
+ADJUSTMENT\t3002\t2023-01-07\t2023-01-07\t-90.40\tClawback`;
+        break;
+        
+      case 'mixed':
+        sampleData = `Billable Type\tBillable ID\tStart Date\tEnd Date\tNet Payout Amount\tAction
+MERCHANT\t1001\t2023-01-01\t2023-01-07\t1250.50\tNew
+MERCHANT\t1001\t2023-01-08\t2023-01-14\t1180.75\tNew
+MERCHANT\t1001\t2023-01-15\t2023-01-21\t1320.25\tNew
+MERCHANT\t1001\t2023-01-22\t2023-01-28\t1195.40\tNew
+MERCHANT\t1001\t2023-01-29\t2023-02-04\t1280.60\tNew
+MERCHANT\t1001\t2023-02-05\t2023-02-11\t1350.80\tNew
+MERCHANT\t1001\t2023-02-12\t2023-02-18\t1420.30\tNew
+DRIVER\t2001\t2023-01-01\t2023-01-07\t450.25\tNew
+DRIVER\t2001\t2023-01-08\t2023-01-14\t480.60\tNew
+DRIVER\t2001\t2023-01-15\t2023-01-21\t520.30\tNew
+DRIVER\t2001\t2023-01-22\t2023-01-28\t490.75\tNew
+DRIVER\t2001\t2023-01-29\t2023-02-04\t510.40\tNew
+DRIVER\t2001\t2023-02-05\t2023-02-11\t530.20\tNew
+DRIVER\t2001\t2023-02-12\t2023-02-18\t550.80\tNew
+ADJUSTMENT\t3001\t2023-01-01\t2023-01-01\t-120.50\tClawback
+ADJUSTMENT\t3001\t2023-01-02\t2023-01-02\t-85.25\tClawback
+ADJUSTMENT\t3001\t2023-01-03\t2023-01-03\t-95.40\tClawback
+ADJUSTMENT\t3001\t2023-01-04\t2023-01-04\t-110.30\tClawback
+ADJUSTMENT\t3001\t2023-01-05\t2023-01-05\t-75.60\tClawback
+ADJUSTMENT\t3001\t2023-01-06\t2023-01-06\t-90.80\tClawback
+ADJUSTMENT\t3001\t2023-01-07\t2023-01-07\t-105.20\tClawback
+MERCHANT\t1002\t2023-01-01\t2023-01-07\t980.40\tNew
+MERCHANT\t1002\t2023-01-08\t2023-01-14\t1020.60\tNew
+MERCHANT\t1002\t2023-01-15\t2023-01-21\t950.30\tNew
+MERCHANT\t1002\t2023-01-22\t2023-01-28\t1100.20\tNew
+MERCHANT\t1002\t2023-01-29\t2023-02-04\t1050.70\tNew
+MERCHANT\t1002\t2023-02-05\t2023-02-11\t980.90\tNew
+MERCHANT\t1002\t2023-02-12\t2023-02-18\t1120.40\tNew
+DRIVER\t2002\t2023-01-01\t2023-01-07\t420.50\tNew
+DRIVER\t2002\t2023-01-08\t2023-01-14\t440.30\tNew
+DRIVER\t2002\t2023-01-15\t2023-01-21\t460.70\tNew
+DRIVER\t2002\t2023-01-22\t2023-01-28\t430.90\tNew
+DRIVER\t2002\t2023-01-29\t2023-02-04\t450.60\tNew
+DRIVER\t2002\t2023-02-05\t2023-02-11\t470.40\tNew
+DRIVER\t2002\t2023-02-12\t2023-02-18\t490.20\tNew
+ADJUSTMENT\t3002\t2023-01-01\t2023-01-01\t-65.40\tClawback
+ADJUSTMENT\t3002\t2023-01-02\t2023-01-02\t-70.60\tClawback
+ADJUSTMENT\t3002\t2023-01-03\t2023-01-03\t-55.30\tClawback
+ADJUSTMENT\t3002\t2023-01-04\t2023-01-04\t-80.20\tClawback
+ADJUSTMENT\t3002\t2023-01-05\t2023-01-05\t-60.70\tClawback
+ADJUSTMENT\t3002\t2023-01-06\t2023-01-06\t-75.90\tClawback
+ADJUSTMENT\t3002\t2023-01-07\t2023-01-07\t-90.40\tClawback`;
+        break;
+    }
+    
+    document.getElementById('importData').value = sampleData;
+    showMessage(`Sample ${type} data loaded. Click "Import Data" to add it.`, 'success');
   }
   
   // Import data from textarea
@@ -1381,12 +1845,13 @@
         continue;
       }
 
-      let type = columns[0];
-      let id = columns[1];
-      let start = convertDate(columns[2]);
-      let end = convertDate(columns[3]);
-      let amount = parseAmount(columns[4]);
-      let action = columns[5] || '';
+      // Trim all column values
+      let type = columns[0].trim();
+      let id = columns[1].trim();
+      let start = convertDate(columns[2].trim());
+      let end = convertDate(columns[3].trim());
+      let amount = parseAmount(columns[4].trim());
+      let action = columns[5] ? columns[5].trim() : "";
 
       // Create new row
       const row = tableBody.insertRow();
@@ -1405,6 +1870,11 @@
         amountCell.innerText = `($${formatNumber(Math.abs(amount))})`;
       } else {
         amountCell.innerText = `$${formatNumber(amount)}`;
+      }
+      
+      // Apply special styling for ADJUSTMENT type
+      if (type === 'ADJUSTMENT') {
+        row.classList.add('adjustment-row');
       }
       
       row.insertCell(5).innerText = 'Imported';
@@ -1433,6 +1903,7 @@
     showMessage(`Import completed: ${imported} records imported, ${skipped} records skipped`, 'success');
     populateIdFilter();
     updateReportView();
+    updateAdjustmentsView();
   }
   
   // Convert date to YYYY-MM-DD format
@@ -1548,6 +2019,10 @@
         document.getElementById('reportView').classList.add('active');
         updateReportView();
         break;
+      case 'adjustments':
+        document.getElementById('adjustmentsView').classList.add('active');
+        updateAdjustmentsView();
+        break;
     }
   }
   
@@ -1612,7 +2087,8 @@
           costs: 0,
           advertising: 0,
           fees: 0,
-          otherDeductions: 0
+          otherDeductions: 0,
+          adjustments: 0
         };
       }
       
@@ -1627,9 +2103,10 @@
         branchGroups[id].deducted += Math.abs(amount);
         branchGroups[id].net += amount;
         
-        // Categorize deductions (this is a simplified example)
-        // In a real system, you would have more specific categorization
-        if (type === 'DRIVER') {
+        // Categorize deductions based on type
+        if (type === 'ADJUSTMENT') {
+          branchGroups[id].adjustments += Math.abs(amount);
+        } else if (type === 'DRIVER') {
           branchGroups[id].compensation += Math.abs(amount) * 0.6;
           branchGroups[id].costs += Math.abs(amount) * 0.3;
           branchGroups[id].fees += Math.abs(amount) * 0.1;
@@ -1730,6 +2207,12 @@
       
       // Add to report table
       const reportRow = reportTableBody.insertRow();
+      
+      // Apply special styling for ADJUSTMENT type
+      if (type === 'ADJUSTMENT') {
+        reportRow.classList.add('adjustment-row');
+      }
+      
       reportRow.insertCell(0).innerText = type;
       reportRow.insertCell(1).innerText = id;
       reportRow.insertCell(2).innerText = start;
@@ -1744,6 +2227,219 @@
         amountCell.innerText = `$${formatNumber(amount)}`;
       }
     });
+  }
+  
+  // Update adjustments view
+  function updateAdjustmentsView() {
+    // Set report date
+    document.getElementById('adjustmentsDate').innerText = 'Generated on: ' + formatDateForDisplay(new Date());
+    
+    // Get adjustments date filters
+    const adjustmentsFromDate = document.getElementById('adjustmentsFromDate').value;
+    const adjustmentsToDate = document.getElementById('adjustmentsToDate').value;
+    
+    // Update date range display
+    const dateRangeElement = document.getElementById('adjustmentsDateRange');
+    if (adjustmentsFromDate && adjustmentsToDate) {
+      dateRangeElement.innerText = 'Date Range: ' + formatDateRangeForDisplay(adjustmentsFromDate, adjustmentsToDate);
+    } else if (adjustmentsFromDate) {
+      dateRangeElement.innerText = 'Date Range: From ' + formatDateForDisplay(adjustmentsFromDate);
+    } else if (adjustmentsToDate) {
+      dateRangeElement.innerText = 'Date Range: To ' + formatDateForDisplay(adjustmentsToDate);
+    } else {
+      dateRangeElement.innerText = 'Date Range: All Records';
+    }
+    
+    // Get all adjustment records
+    const adjustmentRecords = allData.filter(item => item.type.trim().toUpperCase() === 'ADJUSTMENT');
+    
+    // Apply date filters if set
+    const filteredAdjustments = adjustmentRecords.filter(record => {
+      if (adjustmentsFromDate && record.start < adjustmentsFromDate) return false;
+      if (adjustmentsToDate && record.start > adjustmentsToDate) return false;
+      return true;
+    });
+    
+    // Calculate overview statistics
+    let totalAdjustments = 0;
+    const uniqueIDs = new Set();
+    const uniqueDays = new Set();
+    
+    // Group by ID and date
+    const idDateGroups = {};
+    
+    filteredAdjustments.forEach(record => {
+      const amount = parseAmount(record.amount);
+      if (amount >= 0) return; // Skip positive amounts
+      
+      const id = record.id;
+      const date = record.start;
+      
+      totalAdjustments += Math.abs(amount);
+      uniqueIDs.add(id);
+      uniqueDays.add(date);
+      
+      if (!idDateGroups[id]) {
+        idDateGroups[id] = {};
+      }
+      
+      if (!idDateGroups[id][date]) {
+        idDateGroups[id][date] = 0;
+      }
+      
+      idDateGroups[id][date] += Math.abs(amount);
+    });
+    
+    // Update overview cards
+    document.getElementById('totalAdjustments').innerText = `$${formatNumber(totalAdjustments)}`;
+    document.getElementById('uniqueIDs').innerText = uniqueIDs.size;
+    document.getElementById('avgPerID').innerText = `$${formatNumber(uniqueIDs.size > 0 ? totalAdjustments / uniqueIDs.size : 0)}`;
+    document.getElementById('adjustmentDays').innerText = uniqueDays.size;
+    
+    // Show debug information
+    const debugInfo = document.getElementById('debugInfo');
+    debugInfo.style.display = 'block';
+    debugInfo.innerHTML = `
+      Debug Information:<br>
+      Total records in allData: ${allData.length}<br>
+      Adjustment records count: ${adjustmentRecords.length}<br>
+      Filtered adjustments count: ${filteredAdjustments.length}<br>
+      Unique IDs with adjustments: ${uniqueIDs.size}<br>
+      Unique days with adjustments: ${uniqueDays.size}<br>
+      Total adjustments amount: $${formatNumber(totalAdjustments)}
+    `;
+    
+    // Generate daily adjustments report
+    const dailyAdjustmentsContainer = document.getElementById('dailyAdjustmentsContainer');
+    dailyAdjustmentsContainer.innerHTML = '';
+    
+    if (Object.keys(idDateGroups).length === 0) {
+      dailyAdjustmentsContainer.innerHTML = '<p>No adjustment records found.</p>';
+    } else {
+      // Sort IDs
+      const sortedIDs = Object.keys(idDateGroups).sort((a, b) => parseInt(a) - parseInt(b));
+      
+      // Create section for each ID
+      sortedIDs.forEach(id => {
+        const idSection = createIDAdjustmentsSection(id, idDateGroups[id]);
+        dailyAdjustmentsContainer.appendChild(idSection);
+      });
+    }
+  }
+  
+  // Create ID adjustments section
+  function createIDAdjustmentsSection(id, dateGroups) {
+    const idSection = document.createElement('div');
+    idSection.className = 'id-section';
+    
+    // Create header
+    const idHeader = document.createElement('div');
+    idHeader.className = 'id-header';
+    
+    const headerTitle = document.createElement('h3');
+    headerTitle.innerHTML = `
+      ID #${id}
+      <span class="adjustment-badge">${Object.keys(dateGroups).length} days</span>
+    `;
+    
+    idHeader.appendChild(headerTitle);
+    idSection.appendChild(idHeader);
+    
+    // Create content
+    const idContent = document.createElement('div');
+    idContent.className = 'id-content';
+    
+    // Create daily adjustments table
+    const dayTable = document.createElement('table');
+    dayTable.className = 'day-table';
+    
+    const tableHeader = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    
+    const headers = ['Date', 'Day', 'Adjustment Amount'];
+    headers.forEach(headerText => {
+      const th = document.createElement('th');
+      th.innerText = headerText;
+      headerRow.appendChild(th);
+    });
+    
+    tableHeader.appendChild(headerRow);
+    dayTable.appendChild(tableHeader);
+    
+    const tableBody = document.createElement('tbody');
+    
+    // Sort dates
+    const sortedDates = Object.keys(dateGroups).sort();
+    
+    // Calculate total for this ID
+    let idTotal = 0;
+    
+    // Add rows for each date
+    sortedDates.forEach(date => {
+      const amount = dateGroups[date];
+      idTotal += amount;
+      
+      const row = document.createElement('tr');
+      
+      const dateCell = document.createElement('td');
+      dateCell.innerText = date;
+      row.appendChild(dateCell);
+      
+      const dayCell = document.createElement('td');
+      dayCell.innerText = getDayName(date);
+      row.appendChild(dayCell);
+      
+      const amountCell = document.createElement('td');
+      amountCell.className = 'negative-amount';
+      amountCell.innerText = `($${formatNumber(amount)})`;
+      row.appendChild(amountCell);
+      
+      tableBody.appendChild(row);
+    });
+    
+    dayTable.appendChild(tableBody);
+    idContent.appendChild(dayTable);
+    
+    // Create summary section
+    const daySummary = document.createElement('div');
+    daySummary.className = 'day-summary';
+    
+    const summaryTitle = document.createElement('h4');
+    summaryTitle.innerText = 'ID Summary';
+    daySummary.appendChild(summaryTitle);
+    
+    const summaryRows = [
+      { label: 'Total Days with Adjustments', value: Object.keys(dateGroups).length, isNegative: false },
+      { label: 'Total Adjustment Amount', value: idTotal, isNegative: true },
+      { label: 'Average Daily Adjustment', value: idTotal / Object.keys(dateGroups).length, isNegative: true }
+    ];
+    
+    summaryRows.forEach(item => {
+      const summaryRow = document.createElement('div');
+      summaryRow.className = 'day-summary-row';
+      
+      const label = document.createElement('div');
+      label.className = 'day-summary-label';
+      label.innerText = item.label;
+      
+      const value = document.createElement('div');
+      value.className = 'day-summary-value';
+      if (item.isNegative) {
+        value.classList.add('negative-value');
+        value.innerText = `($${formatNumber(Math.abs(item.value))})`;
+      } else {
+        value.innerText = item.value;
+      }
+      
+      summaryRow.appendChild(label);
+      summaryRow.appendChild(value);
+      daySummary.appendChild(summaryRow);
+    });
+    
+    idContent.appendChild(daySummary);
+    idSection.appendChild(idContent);
+    
+    return idSection;
   }
   
   // Create enhanced branch report element
@@ -1776,12 +2472,16 @@
       { label: 'Total Sales', value: branch.sales, isNegative: false },
       { label: 'Total Deducted', value: branch.deducted, isNegative: true },
       { label: 'Net Payout', value: branch.net, isNegative: branch.net < 0 },
-      { label: 'Compensation', value: branch.compensation, isNegative: true }
+      { label: 'Adjustments', value: branch.adjustments, isNegative: true, isAdjustment: true }
     ];
     
     overviewItems.forEach(item => {
       const overviewCard = document.createElement('div');
       overviewCard.className = 'branch-overview-card';
+      
+      if (item.isAdjustment) {
+        overviewCard.classList.add('adjustment-card');
+      }
       
       const label = document.createElement('h4');
       label.innerText = item.label;
@@ -1874,7 +2574,7 @@
     const deductionsTableHeader = document.createElement('thead');
     const deductionsHeaderRow = document.createElement('tr');
     
-    const deductionsHeaders = ['Start Date', 'End Date', 'Amount'];
+    const deductionsHeaders = ['Type', 'Start Date', 'End Date', 'Amount'];
     deductionsHeaders.forEach(headerText => {
       const th = document.createElement('th');
       th.innerText = headerText;
@@ -1893,6 +2593,15 @@
     
     deductionRecords.forEach(record => {
       const row = document.createElement('tr');
+      
+      // Apply special styling for ADJUSTMENT type
+      if (record.type === 'ADJUSTMENT') {
+        row.classList.add('adjustment-row');
+      }
+      
+      const typeCell = document.createElement('td');
+      typeCell.innerText = record.type;
+      row.appendChild(typeCell);
       
       const startDateCell = document.createElement('td');
       startDateCell.innerText = record.start;
@@ -1945,12 +2654,17 @@
       { category: 'Costs', amount: branch.costs },
       { category: 'Advertising', amount: branch.advertising },
       { category: 'Fees', amount: branch.fees },
+      { category: 'Adjustments', amount: branch.adjustments, isAdjustment: true },
       { category: 'Other Deductions', amount: branch.otherDeductions }
     ];
     
     breakdownItems.forEach(item => {
       if (item.amount > 0) {
         const row = document.createElement('tr');
+        
+        if (item.isAdjustment) {
+          row.classList.add('adjustment-row');
+        }
         
         const categoryCell = document.createElement('td');
         categoryCell.innerText = item.category;
@@ -1985,6 +2699,7 @@
       { label: 'Total Costs', value: branch.costs, isNegative: true },
       { label: 'Total Advertising', value: branch.advertising, isNegative: true },
       { label: 'Total Fees', value: branch.fees, isNegative: true },
+      { label: 'Total Adjustments', value: branch.adjustments, isNegative: true, isAdjustment: true },
       { label: 'Other Deductions', value: branch.otherDeductions, isNegative: true },
       { label: 'Total Deductions', value: branch.deducted, isNegative: true },
       { label: 'Net Payout (After Deductions)', value: branch.net, isNegative: branch.net < 0 }
@@ -2104,6 +2819,12 @@
     
     weekRows.forEach(item => {
       const row = weekTableBody.insertRow();
+      
+      // Apply special styling for ADJUSTMENT type
+      if (item.type === 'ADJUSTMENT') {
+        row.classList.add('adjustment-row');
+      }
+      
       row.insertCell(0).innerText = item.type;
       row.insertCell(1).innerText = item.id;
       row.insertCell(2).innerText = item.start;
@@ -2127,12 +2848,6 @@
     const day = d.getDay();
     const diff = d.getDate() - day;
     return new Date(d.setDate(diff));
-  }
-  
-  // Format date
-  function formatDate(date) {
-    const d = new Date(date);
-    return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
   }
   
   // Change week
