@@ -342,6 +342,77 @@
     font-weight: 500;
   }
   
+  /* Branch Report Styles */
+  .branch-report-section {
+    margin-bottom: 30px;
+  }
+  .branch-report-header {
+    background-color: #e8f0fe;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #dadce0;
+    border-bottom: none;
+  }
+  .branch-report-header h3 {
+    margin: 0;
+    color: #1a73e8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .branch-badge {
+    background-color: #1a73e8;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+  .branch-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dadce0;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+  }
+  .branch-table th, .branch-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  .branch-table th {
+    background-color: #f8f9fa;
+    color: #202124;
+    font-weight: 600;
+  }
+  .branch-table tr:last-child td {
+    border-bottom: none;
+  }
+  .branch-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+  .branch-summary-item {
+    text-align: center;
+  }
+  .branch-summary-label {
+    font-size: 0.8em;
+    color: #5f6368;
+  }
+  .branch-summary-value {
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  .positive-value {
+    color: #1e8e3e;
+  }
+  .negative-value {
+    color: #c5221f;
+  }
+  
   @media (max-width: 768px) {
     .form-row {
       flex-direction: column;
@@ -374,6 +445,11 @@
     .report-date-filters {
       flex-direction: column;
     }
+    .branch-report-header h3 {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
   }
   @media print {
     .action-buttons, .view-tabs, .import-section, form, .search-box, .filters, .report-date-filters {
@@ -398,6 +474,16 @@
     }
     .report-breakdown h3, .report-table-container h3, .report-summary h3 {
       color: #000;
+    }
+    .branch-report-header {
+      background-color: #f8f9fa;
+      border-color: #ddd;
+    }
+    .branch-report-header h3 {
+      color: #000;
+    }
+    .branch-badge {
+      background-color: #000;
     }
   }
 </style>
@@ -585,30 +671,10 @@
     </div>
     
     <div class="report-breakdown">
-      <h3>Breakdown by Billable Type</h3>
-      <table class="breakdown-table">
-        <thead>
-          <tr>
-            <th>Billable Type</th>
-            <th>Record Count</th>
-            <th>Total Amount</th>
-            <th>Deducted Amount</th>
-            <th>Net Amount</th>
-          </tr>
-        </thead>
-        <tbody id="breakdownTableBody">
-          <!-- Breakdown rows will appear here -->
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>Total</th>
-            <th id="breakdownTotalCount">0</th>
-            <th id="breakdownTotalAmount">$0.00</th>
-            <th id="breakdownTotalDeducted">$0.00</th>
-            <th id="breakdownTotalNet">$0.00</th>
-          </tr>
-        </tfoot>
-      </table>
+      <h3>Breakdown by Branch (with at least 7 records)</h3>
+      <div id="branchReportsContainer">
+        <!-- Branch reports will appear here -->
+      </div>
     </div>
     
     <div class="report-table-container">
@@ -1366,12 +1432,8 @@
     // Get all visible rows from the main table
     const visibleRows = Array.from(tableBody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
     
-    // Group data by billable type
-    const typeGroups = {
-      MERCHANT: { count: 0, total: 0, deducted: 0, net: 0 },
-      DRIVER: { count: 0, total: 0, deducted: 0, net: 0 },
-      PARTNER: { count: 0, total: 0, deducted: 0, net: 0 }
-    };
+    // Group data by branch (Billable ID)
+    const branchGroups = {};
     
     visibleRows.forEach(row => {
       const type = row.cells[0].innerText;
@@ -1385,39 +1447,33 @@
       if (reportFromDate && start < reportFromDate) return;
       if (reportToDate && start > reportToDate) return;
       
-      // Add to report table
-      const reportRow = reportTableBody.insertRow();
-      reportRow.insertCell(0).innerText = type;
-      reportRow.insertCell(1).innerText = id;
-      reportRow.insertCell(2).innerText = start;
-      reportRow.insertCell(3).innerText = end;
-      
-      // Format amount with proper color
-      const amountCell = reportRow.insertCell(4);
-      if (amount < 0) {
-        amountCell.classList.add('negative-amount');
-        amountCell.innerText = `($${formatNumber(Math.abs(amount))})`;
-        negativeTotal += Math.abs(amount);
-        
-        // Update type groups
-        if (typeGroups[type]) {
-          typeGroups[type].deducted += Math.abs(amount);
-          typeGroups[type].net += amount;
-        }
-      } else {
-        amountCell.innerText = `$${formatNumber(amount)}`;
-        positiveTotal += amount;
-        
-        // Update type groups
-        if (typeGroups[type]) {
-          typeGroups[type].total += amount;
-          typeGroups[type].net += amount;
-        }
+      // Initialize branch group if not exists
+      if (!branchGroups[id]) {
+        branchGroups[id] = {
+          id: id,
+          type: type,
+          records: [],
+          total: 0,
+          deducted: 0,
+          net: 0
+        };
       }
       
-      // Update type groups count
-      if (typeGroups[type]) {
-        typeGroups[type].count++;
+      // Add to branch group
+      branchGroups[id].records.push({
+        type, id, start, end, amount
+      });
+      
+      // Update totals
+      if (amount < 0) {
+        branchGroups[id].total += amount;
+        branchGroups[id].deducted += Math.abs(amount);
+        branchGroups[id].net += amount;
+        negativeTotal += Math.abs(amount);
+      } else {
+        branchGroups[id].total += amount;
+        branchGroups[id].net += amount;
+        positiveTotal += amount;
       }
       
       total += amount;
@@ -1476,52 +1532,162 @@
       reportNetTotal.innerText = `$${formatNumber(total)}`;
     }
     
-    // Update breakdown table
-    const breakdownTableBody = document.getElementById('breakdownTableBody');
-    breakdownTableBody.innerHTML = '';
+    // Generate branch reports (only for branches with at least 7 records)
+    const branchReportsContainer = document.getElementById('branchReportsContainer');
+    branchReportsContainer.innerHTML = '';
     
-    let totalCount = 0;
-    let totalAmount = 0;
-    let totalDeducted = 0;
-    let totalNet = 0;
+    // Filter branches with at least 7 records
+    const filteredBranches = Object.values(branchGroups).filter(branch => branch.records.length >= 7);
     
-    Object.keys(typeGroups).forEach(type => {
-      const group = typeGroups[type];
-      if (group.count > 0) {
-        const row = breakdownTableBody.insertRow();
-        row.insertCell(0).innerText = type;
-        row.insertCell(1).innerText = group.count;
-        row.insertCell(2).innerText = `$${formatNumber(group.total)}`;
-        row.insertCell(3).innerText = `$${formatNumber(group.deducted)}`;
-        
-        const netCell = row.insertCell(4);
-        if (group.net < 0) {
-          netCell.className = 'negative-amount';
-          netCell.innerText = `($${formatNumber(Math.abs(group.net))})`;
-        } else {
-          netCell.innerText = `$${formatNumber(group.net)}`;
-        }
-        
-        totalCount += group.count;
-        totalAmount += group.total;
-        totalDeducted += group.deducted;
-        totalNet += group.net;
+    if (filteredBranches.length === 0) {
+      branchReportsContainer.innerHTML = '<p>No branches with at least 7 records found.</p>';
+    } else {
+      // Sort branches by ID
+      filteredBranches.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+      
+      // Create report for each branch
+      filteredBranches.forEach(branch => {
+        const branchReport = createBranchReport(branch);
+        branchReportsContainer.appendChild(branchReport);
+      });
+    }
+    
+    // Populate detailed report table
+    visibleRows.forEach(row => {
+      const type = row.cells[0].innerText;
+      const id = row.cells[1].innerText;
+      const start = row.cells[2].innerText;
+      const end = row.cells[3].innerText;
+      const amountText = row.cells[4].innerText;
+      const amount = parseAmount(amountText);
+      
+      // Apply date filters if set
+      if (reportFromDate && start < reportFromDate) return;
+      if (reportToDate && start > reportToDate) return;
+      
+      // Add to report table
+      const reportRow = reportTableBody.insertRow();
+      reportRow.insertCell(0).innerText = type;
+      reportRow.insertCell(1).innerText = id;
+      reportRow.insertCell(2).innerText = start;
+      reportRow.insertCell(3).innerText = end;
+      
+      // Format amount with proper color
+      const amountCell = reportRow.insertCell(4);
+      if (amount < 0) {
+        amountCell.classList.add('negative-amount');
+        amountCell.innerText = `($${formatNumber(Math.abs(amount))})`;
+      } else {
+        amountCell.innerText = `$${formatNumber(amount)}`;
       }
     });
+  }
+  
+  // Create branch report element
+  function createBranchReport(branch) {
+    const branchReportSection = document.createElement('div');
+    branchReportSection.className = 'branch-report-section';
     
-    // Update breakdown table footer
-    document.getElementById('breakdownTotalCount').innerText = totalCount;
-    document.getElementById('breakdownTotalAmount').innerText = `$${formatNumber(totalAmount)}`;
-    document.getElementById('breakdownTotalDeducted').innerText = `$${formatNumber(totalDeducted)}`;
+    // Create header
+    const branchReportHeader = document.createElement('div');
+    branchReportHeader.className = 'branch-report-header';
     
-    const breakdownTotalNet = document.getElementById('breakdownTotalNet');
-    if (totalNet < 0) {
-      breakdownTotalNet.className = 'negative-amount';
-      breakdownTotalNet.innerText = `($${formatNumber(Math.abs(totalNet))})`;
-    } else {
-      breakdownTotalNet.className = '';
-      breakdownTotalNet.innerText = `$${formatNumber(totalNet)}`;
-    }
+    const headerTitle = document.createElement('h3');
+    headerTitle.innerHTML = `
+      Branch #${branch.id} (${branch.type})
+      <span class="branch-badge">${branch.records.length} records</span>
+    `;
+    
+    branchReportHeader.appendChild(headerTitle);
+    branchReportSection.appendChild(branchReportHeader);
+    
+    // Create table
+    const branchTable = document.createElement('table');
+    branchTable.className = 'branch-table';
+    
+    // Create table header
+    const tableHeader = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    
+    const headers = ['Start Date', 'End Date', 'Net Payout Amount'];
+    headers.forEach(headerText => {
+      const th = document.createElement('th');
+      th.innerText = headerText;
+      headerRow.appendChild(th);
+    });
+    
+    tableHeader.appendChild(headerRow);
+    branchTable.appendChild(tableHeader);
+    
+    // Create table body
+    const tableBody = document.createElement('tbody');
+    
+    // Sort records by start date
+    const sortedRecords = [...branch.records].sort((a, b) => new Date(a.start) - new Date(b.start));
+    
+    // Add records to table
+    sortedRecords.forEach(record => {
+      const row = document.createElement('tr');
+      
+      const startDateCell = document.createElement('td');
+      startDateCell.innerText = record.start;
+      row.appendChild(startDateCell);
+      
+      const endDateCell = document.createElement('td');
+      endDateCell.innerText = record.end;
+      row.appendChild(endDateCell);
+      
+      const amountCell = document.createElement('td');
+      if (record.amount < 0) {
+        amountCell.className = 'negative-amount';
+        amountCell.innerText = `($${formatNumber(Math.abs(record.amount))})`;
+      } else {
+        amountCell.innerText = `$${formatNumber(record.amount)}`;
+      }
+      row.appendChild(amountCell);
+      
+      tableBody.appendChild(row);
+    });
+    
+    branchTable.appendChild(tableBody);
+    branchReportSection.appendChild(branchTable);
+    
+    // Create branch summary
+    const branchSummary = document.createElement('div');
+    branchSummary.className = 'branch-summary';
+    
+    const summaryItems = [
+      { label: 'Total Amount', value: branch.total, isNegative: branch.total < 0 },
+      { label: 'Deducted Amount', value: branch.deducted, isNegative: true },
+      { label: 'Net Amount', value: branch.net, isNegative: branch.net < 0 }
+    ];
+    
+    summaryItems.forEach(item => {
+      const summaryItem = document.createElement('div');
+      summaryItem.className = 'branch-summary-item';
+      
+      const label = document.createElement('div');
+      label.className = 'branch-summary-label';
+      label.innerText = item.label;
+      
+      const value = document.createElement('div');
+      value.className = 'branch-summary-value';
+      if (item.isNegative) {
+        value.classList.add('negative-value');
+        value.innerText = `($${formatNumber(Math.abs(item.value))})`;
+      } else {
+        value.classList.add('positive-value');
+        value.innerText = `$${formatNumber(item.value)}`;
+      }
+      
+      summaryItem.appendChild(label);
+      summaryItem.appendChild(value);
+      branchSummary.appendChild(summaryItem);
+    });
+    
+    branchReportSection.appendChild(branchSummary);
+    
+    return branchReportSection;
   }
   
   // Show weekly view
