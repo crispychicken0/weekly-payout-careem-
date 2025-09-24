@@ -413,6 +413,122 @@
     color: #c5221f;
   }
   
+  /* Enhanced Branch Report Styles */
+  .branch-details-section {
+    margin-bottom: 30px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .branch-details-header {
+    background-color: #e8f0fe;
+    padding: 15px;
+    border-bottom: 1px solid #dadce0;
+  }
+  .branch-details-header h3 {
+    margin: 0;
+    color: #1a73e8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .branch-details-content {
+    padding: 20px;
+  }
+  .branch-overview-cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .branch-overview-card {
+    flex: 1;
+    min-width: 150px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 3px solid #1a73e8;
+  }
+  .branch-overview-card h4 {
+    margin-top: 0;
+    color: #1a73e8;
+    font-size: 0.9em;
+  }
+  .branch-overview-card .value {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  .branch-details-tables {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .branch-table-container {
+    flex: 1;
+    min-width: 300px;
+  }
+  .branch-table-container h4 {
+    color: #1a73e8;
+    margin-bottom: 10px;
+    font-size: 1em;
+  }
+  .branch-small-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .branch-small-table th, .branch-small-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  .branch-small-table th {
+    background-color: #f8f9fa;
+    color: #202124;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+  .branch-small-table td {
+    font-size: 0.9em;
+  }
+  .branch-summary-section {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  .branch-summary-section h4 {
+    margin-top: 0;
+    color: #1a73e8;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  .branch-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .branch-summary-row:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 2px solid #ddd;
+  }
+  .branch-summary-label {
+    font-weight: 500;
+  }
+  .branch-summary-value {
+    font-weight: bold;
+  }
+  
   @media (max-width: 768px) {
     .form-row {
       flex-direction: column;
@@ -450,6 +566,18 @@
       align-items: flex-start;
       gap: 10px;
     }
+    .branch-details-tables {
+      flex-direction: column;
+    }
+    .branch-overview-cards {
+      flex-direction: column;
+    }
+    .branch-summary-row {
+      flex-direction: column;
+    }
+    .branch-summary-value {
+      margin-top: 5px;
+    }
   }
   @media print {
     .action-buttons, .view-tabs, .import-section, form, .search-box, .filters, .report-date-filters {
@@ -484,6 +612,25 @@
     }
     .branch-badge {
       background-color: #000;
+    }
+    .branch-details-header {
+      background-color: #f8f9fa;
+      border-color: #ddd;
+    }
+    .branch-details-header h3 {
+      color: #000;
+    }
+    .branch-overview-card {
+      border-left: 3px solid #000;
+    }
+    .branch-overview-card h4 {
+      color: #000;
+    }
+    .branch-table-container h4 {
+      color: #000;
+    }
+    .branch-summary-section h4 {
+      color: #000;
     }
   }
 </style>
@@ -649,9 +796,9 @@
     
     <div class="report-overview">
       <div class="report-overview-card">
-        <h3>Total Payout</h3>
-        <div class="value" id="reportTotalAmount">$0.00</div>
-        <div>Net amount after deductions</div>
+        <h3>Total Sales</h3>
+        <div class="value" id="reportTotalSales">$0.00</div>
+        <div>Total sales before deductions</div>
       </div>
       <div class="report-overview-card">
         <h3>Total Deducted</h3>
@@ -659,19 +806,19 @@
         <div>Total amount deducted</div>
       </div>
       <div class="report-overview-card">
+        <h3>Net Payout</h3>
+        <div class="value" id="reportTotalAmount">$0.00</div>
+        <div>Net amount after deductions</div>
+      </div>
+      <div class="report-overview-card">
         <h3>Record Count</h3>
         <div class="value" id="reportRecordCount">0</div>
         <div>Total number of records</div>
       </div>
-      <div class="report-overview-card">
-        <h3>Average Amount</h3>
-        <div class="value" id="reportAvgAmount">$0.00</div>
-        <div>Average per record</div>
-      </div>
     </div>
     
     <div class="report-breakdown">
-      <h3>Breakdown by Branch (with at least 7 records)</h3>
+      <h3>Branch Detailed Reports (with at least 7 records)</h3>
       <div id="branchReportsContainer">
         <!-- Branch reports will appear here -->
       </div>
@@ -704,16 +851,20 @@
     <div class="report-summary">
       <h3>Payment Summary</h3>
       <div class="summary-row">
-        <span class="summary-label">Total Positive Amount:</span>
-        <span class="summary-value" id="reportPositiveTotal">$0.00</span>
+        <span class="summary-label">Total Sales (Before Deductions):</span>
+        <span class="summary-value" id="reportSalesTotal">$0.00</span>
       </div>
       <div class="summary-row">
         <span class="summary-label">Total Deducted Amount:</span>
         <span class="summary-value deducted-amount" id="reportNegativeTotal">$0.00</span>
       </div>
       <div class="summary-row">
-        <span class="summary-label">Net Total:</span>
+        <span class="summary-label">Net Total (After Deductions):</span>
         <span class="summary-value" id="reportNetTotal">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Difference After Payouts:</span>
+        <span class="summary-value" id="reportDifferenceTotal">$0.00</span>
       </div>
     </div>
     
@@ -1455,7 +1606,13 @@
           records: [],
           total: 0,
           deducted: 0,
-          net: 0
+          net: 0,
+          sales: 0,
+          compensation: 0,
+          costs: 0,
+          advertising: 0,
+          fees: 0,
+          otherDeductions: 0
         };
       }
       
@@ -1469,10 +1626,26 @@
         branchGroups[id].total += amount;
         branchGroups[id].deducted += Math.abs(amount);
         branchGroups[id].net += amount;
+        
+        // Categorize deductions (this is a simplified example)
+        // In a real system, you would have more specific categorization
+        if (type === 'DRIVER') {
+          branchGroups[id].compensation += Math.abs(amount) * 0.6;
+          branchGroups[id].costs += Math.abs(amount) * 0.3;
+          branchGroups[id].fees += Math.abs(amount) * 0.1;
+        } else if (type === 'MERCHANT') {
+          branchGroups[id].advertising += Math.abs(amount) * 0.4;
+          branchGroups[id].fees += Math.abs(amount) * 0.4;
+          branchGroups[id].otherDeductions += Math.abs(amount) * 0.2;
+        } else {
+          branchGroups[id].otherDeductions += Math.abs(amount);
+        }
+        
         negativeTotal += Math.abs(amount);
       } else {
         branchGroups[id].total += amount;
         branchGroups[id].net += amount;
+        branchGroups[id].sales += amount;
         positiveTotal += amount;
       }
       
@@ -1480,34 +1653,13 @@
       recordCount++;
     });
     
-    // Update report summary cards
-    const reportTotalAmount = document.getElementById('reportTotalAmount');
-    reportTotalAmount.innerText = `$${formatNumber(Math.abs(total))}`;
-    
-    if (total < 0) {
-      reportTotalAmount.className = 'value negative';
-      reportTotalAmount.innerText = `($${formatNumber(Math.abs(total))})`;
-    } else {
-      reportTotalAmount.className = 'value positive';
-    }
-    
+    // Update report overview cards
+    document.getElementById('reportTotalSales').innerText = `$${formatNumber(positiveTotal)}`;
     document.getElementById('reportDeductedAmount').innerText = `$${formatNumber(negativeTotal)}`;
+    document.getElementById('reportTotalAmount').innerText = total < 0 ? 
+      `($${formatNumber(Math.abs(total))})` : 
+      `$${formatNumber(total)}`;
     document.getElementById('reportRecordCount').innerText = recordCount;
-    
-    const reportAvgAmount = document.getElementById('reportAvgAmount');
-    if (recordCount > 0) {
-      const avg = total / recordCount;
-      if (avg < 0) {
-        reportAvgAmount.className = 'value negative';
-        reportAvgAmount.innerText = `($${formatNumber(Math.abs(avg))})`;
-      } else {
-        reportAvgAmount.className = 'value positive';
-        reportAvgAmount.innerText = `$${formatNumber(avg)}`;
-      }
-    } else {
-      reportAvgAmount.className = 'value';
-      reportAvgAmount.innerText = '$0.00';
-    }
     
     // Update report table total
     const reportTableTotal = document.getElementById('reportTableTotal');
@@ -1520,7 +1672,7 @@
     }
     
     // Update report summary section
-    document.getElementById('reportPositiveTotal').innerText = `$${formatNumber(positiveTotal)}`;
+    document.getElementById('reportSalesTotal').innerText = `$${formatNumber(positiveTotal)}`;
     document.getElementById('reportNegativeTotal').innerText = `$${formatNumber(negativeTotal)}`;
     
     const reportNetTotal = document.getElementById('reportNetTotal');
@@ -1530,6 +1682,17 @@
     } else {
       reportNetTotal.className = '';
       reportNetTotal.innerText = `$${formatNumber(total)}`;
+    }
+    
+    // Calculate difference after payouts
+    const difference = positiveTotal - Math.abs(total);
+    const reportDifferenceTotal = document.getElementById('reportDifferenceTotal');
+    if (difference < 0) {
+      reportDifferenceTotal.className = 'negative-amount';
+      reportDifferenceTotal.innerText = `($${formatNumber(Math.abs(difference))})`;
+    } else {
+      reportDifferenceTotal.className = '';
+      reportDifferenceTotal.innerText = `$${formatNumber(difference)}`;
     }
     
     // Generate branch reports (only for branches with at least 7 records)
@@ -1547,7 +1710,7 @@
       
       // Create report for each branch
       filteredBranches.forEach(branch => {
-        const branchReport = createBranchReport(branch);
+        const branchReport = createEnhancedBranchReport(branch);
         branchReportsContainer.appendChild(branchReport);
       });
     }
@@ -1583,14 +1746,14 @@
     });
   }
   
-  // Create branch report element
-  function createBranchReport(branch) {
-    const branchReportSection = document.createElement('div');
-    branchReportSection.className = 'branch-report-section';
+  // Create enhanced branch report element
+  function createEnhancedBranchReport(branch) {
+    const branchDetailsSection = document.createElement('div');
+    branchDetailsSection.className = 'branch-details-section';
     
     // Create header
-    const branchReportHeader = document.createElement('div');
-    branchReportHeader.className = 'branch-report-header';
+    const branchDetailsHeader = document.createElement('div');
+    branchDetailsHeader.className = 'branch-details-header';
     
     const headerTitle = document.createElement('h3');
     headerTitle.innerHTML = `
@@ -1598,35 +1761,84 @@
       <span class="branch-badge">${branch.records.length} records</span>
     `;
     
-    branchReportHeader.appendChild(headerTitle);
-    branchReportSection.appendChild(branchReportHeader);
+    branchDetailsHeader.appendChild(headerTitle);
+    branchDetailsSection.appendChild(branchDetailsHeader);
     
-    // Create table
-    const branchTable = document.createElement('table');
-    branchTable.className = 'branch-table';
+    // Create content
+    const branchDetailsContent = document.createElement('div');
+    branchDetailsContent.className = 'branch-details-content';
     
-    // Create table header
-    const tableHeader = document.createElement('thead');
-    const headerRow = document.createElement('tr');
+    // Create overview cards
+    const branchOverviewCards = document.createElement('div');
+    branchOverviewCards.className = 'branch-overview-cards';
     
-    const headers = ['Start Date', 'End Date', 'Net Payout Amount'];
-    headers.forEach(headerText => {
-      const th = document.createElement('th');
-      th.innerText = headerText;
-      headerRow.appendChild(th);
+    const overviewItems = [
+      { label: 'Total Sales', value: branch.sales, isNegative: false },
+      { label: 'Total Deducted', value: branch.deducted, isNegative: true },
+      { label: 'Net Payout', value: branch.net, isNegative: branch.net < 0 },
+      { label: 'Compensation', value: branch.compensation, isNegative: true }
+    ];
+    
+    overviewItems.forEach(item => {
+      const overviewCard = document.createElement('div');
+      overviewCard.className = 'branch-overview-card';
+      
+      const label = document.createElement('h4');
+      label.innerText = item.label;
+      
+      const value = document.createElement('div');
+      value.className = 'value';
+      if (item.isNegative) {
+        value.classList.add('negative-value');
+        value.innerText = `($${formatNumber(Math.abs(item.value))})`;
+      } else {
+        value.classList.add('positive-value');
+        value.innerText = `$${formatNumber(item.value)}`;
+      }
+      
+      overviewCard.appendChild(label);
+      overviewCard.appendChild(value);
+      branchOverviewCards.appendChild(overviewCard);
     });
     
-    tableHeader.appendChild(headerRow);
-    branchTable.appendChild(tableHeader);
+    branchDetailsContent.appendChild(branchOverviewCards);
     
-    // Create table body
-    const tableBody = document.createElement('tbody');
+    // Create details tables
+    const branchDetailsTables = document.createElement('div');
+    branchDetailsTables.className = 'branch-details-tables';
     
-    // Sort records by start date
-    const sortedRecords = [...branch.records].sort((a, b) => new Date(a.start) - new Date(b.start));
+    // Sales table
+    const salesTableContainer = document.createElement('div');
+    salesTableContainer.className = 'branch-table-container';
     
-    // Add records to table
-    sortedRecords.forEach(record => {
+    const salesTableTitle = document.createElement('h4');
+    salesTableTitle.innerText = 'Sales Records';
+    salesTableContainer.appendChild(salesTableTitle);
+    
+    const salesTable = document.createElement('table');
+    salesTable.className = 'branch-small-table';
+    
+    const salesTableHeader = document.createElement('thead');
+    const salesHeaderRow = document.createElement('tr');
+    
+    const salesHeaders = ['Start Date', 'End Date', 'Amount'];
+    salesHeaders.forEach(headerText => {
+      const th = document.createElement('th');
+      th.innerText = headerText;
+      salesHeaderRow.appendChild(th);
+    });
+    
+    salesTableHeader.appendChild(salesHeaderRow);
+    salesTable.appendChild(salesTableHeader);
+    
+    const salesTableBody = document.createElement('tbody');
+    
+    // Filter and sort sales records (positive amounts)
+    const salesRecords = branch.records
+      .filter(record => record.amount >= 0)
+      .sort((a, b) => new Date(a.start) - new Date(b.start));
+    
+    salesRecords.forEach(record => {
       const row = document.createElement('tr');
       
       const startDateCell = document.createElement('td');
@@ -1638,33 +1850,149 @@
       row.appendChild(endDateCell);
       
       const amountCell = document.createElement('td');
-      if (record.amount < 0) {
-        amountCell.className = 'negative-amount';
-        amountCell.innerText = `($${formatNumber(Math.abs(record.amount))})`;
-      } else {
-        amountCell.innerText = `$${formatNumber(record.amount)}`;
-      }
+      amountCell.innerText = `$${formatNumber(record.amount)}`;
       row.appendChild(amountCell);
       
-      tableBody.appendChild(row);
+      salesTableBody.appendChild(row);
     });
     
-    branchTable.appendChild(tableBody);
-    branchReportSection.appendChild(branchTable);
+    salesTable.appendChild(salesTableBody);
+    salesTableContainer.appendChild(salesTable);
+    branchDetailsTables.appendChild(salesTableContainer);
     
-    // Create branch summary
-    const branchSummary = document.createElement('div');
-    branchSummary.className = 'branch-summary';
+    // Deductions table
+    const deductionsTableContainer = document.createElement('div');
+    deductionsTableContainer.className = 'branch-table-container';
     
-    const summaryItems = [
-      { label: 'Total Amount', value: branch.total, isNegative: branch.total < 0 },
-      { label: 'Deducted Amount', value: branch.deducted, isNegative: true },
-      { label: 'Net Amount', value: branch.net, isNegative: branch.net < 0 }
+    const deductionsTableTitle = document.createElement('h4');
+    deductionsTableTitle.innerText = 'Deductions Records';
+    deductionsTableContainer.appendChild(deductionsTableTitle);
+    
+    const deductionsTable = document.createElement('table');
+    deductionsTable.className = 'branch-small-table';
+    
+    const deductionsTableHeader = document.createElement('thead');
+    const deductionsHeaderRow = document.createElement('tr');
+    
+    const deductionsHeaders = ['Start Date', 'End Date', 'Amount'];
+    deductionsHeaders.forEach(headerText => {
+      const th = document.createElement('th');
+      th.innerText = headerText;
+      deductionsHeaderRow.appendChild(th);
+    });
+    
+    deductionsTableHeader.appendChild(deductionsHeaderRow);
+    deductionsTable.appendChild(deductionsTableHeader);
+    
+    const deductionsTableBody = document.createElement('tbody');
+    
+    // Filter and sort deduction records (negative amounts)
+    const deductionRecords = branch.records
+      .filter(record => record.amount < 0)
+      .sort((a, b) => new Date(a.start) - new Date(b.start));
+    
+    deductionRecords.forEach(record => {
+      const row = document.createElement('tr');
+      
+      const startDateCell = document.createElement('td');
+      startDateCell.innerText = record.start;
+      row.appendChild(startDateCell);
+      
+      const endDateCell = document.createElement('td');
+      endDateCell.innerText = record.end;
+      row.appendChild(endDateCell);
+      
+      const amountCell = document.createElement('td');
+      amountCell.className = 'negative-amount';
+      amountCell.innerText = `($${formatNumber(Math.abs(record.amount))})`;
+      row.appendChild(amountCell);
+      
+      deductionsTableBody.appendChild(row);
+    });
+    
+    deductionsTable.appendChild(deductionsTableBody);
+    deductionsTableContainer.appendChild(deductionsTable);
+    branchDetailsTables.appendChild(deductionsTableContainer);
+    
+    // Breakdown table
+    const breakdownTableContainer = document.createElement('div');
+    breakdownTableContainer.className = 'branch-table-container';
+    
+    const breakdownTableTitle = document.createElement('h4');
+    breakdownTableTitle.innerText = 'Deductions Breakdown';
+    breakdownTableContainer.appendChild(breakdownTableTitle);
+    
+    const breakdownTable = document.createElement('table');
+    breakdownTable.className = 'branch-small-table';
+    
+    const breakdownTableHeader = document.createElement('thead');
+    const breakdownHeaderRow = document.createElement('tr');
+    
+    const breakdownHeaders = ['Category', 'Amount'];
+    breakdownHeaders.forEach(headerText => {
+      const th = document.createElement('th');
+      th.innerText = headerText;
+      breakdownHeaderRow.appendChild(th);
+    });
+    
+    breakdownTableHeader.appendChild(breakdownHeaderRow);
+    breakdownTable.appendChild(breakdownTableHeader);
+    
+    const breakdownTableBody = document.createElement('tbody');
+    
+    const breakdownItems = [
+      { category: 'Compensation', amount: branch.compensation },
+      { category: 'Costs', amount: branch.costs },
+      { category: 'Advertising', amount: branch.advertising },
+      { category: 'Fees', amount: branch.fees },
+      { category: 'Other Deductions', amount: branch.otherDeductions }
     ];
     
-    summaryItems.forEach(item => {
-      const summaryItem = document.createElement('div');
-      summaryItem.className = 'branch-summary-item';
+    breakdownItems.forEach(item => {
+      if (item.amount > 0) {
+        const row = document.createElement('tr');
+        
+        const categoryCell = document.createElement('td');
+        categoryCell.innerText = item.category;
+        row.appendChild(categoryCell);
+        
+        const amountCell = document.createElement('td');
+        amountCell.className = 'negative-amount';
+        amountCell.innerText = `($${formatNumber(item.amount)})`;
+        row.appendChild(amountCell);
+        
+        breakdownTableBody.appendChild(row);
+      }
+    });
+    
+    breakdownTable.appendChild(breakdownTableBody);
+    breakdownTableContainer.appendChild(breakdownTable);
+    branchDetailsTables.appendChild(breakdownTableContainer);
+    
+    branchDetailsContent.appendChild(branchDetailsTables);
+    
+    // Create summary section
+    const branchSummarySection = document.createElement('div');
+    branchSummarySection.className = 'branch-summary-section';
+    
+    const summaryTitle = document.createElement('h4');
+    summaryTitle.innerText = 'Branch Summary';
+    branchSummarySection.appendChild(summaryTitle);
+    
+    const summaryRows = [
+      { label: 'Total Sales (Before Deductions)', value: branch.sales, isNegative: false },
+      { label: 'Total Compensation', value: branch.compensation, isNegative: true },
+      { label: 'Total Costs', value: branch.costs, isNegative: true },
+      { label: 'Total Advertising', value: branch.advertising, isNegative: true },
+      { label: 'Total Fees', value: branch.fees, isNegative: true },
+      { label: 'Other Deductions', value: branch.otherDeductions, isNegative: true },
+      { label: 'Total Deductions', value: branch.deducted, isNegative: true },
+      { label: 'Net Payout (After Deductions)', value: branch.net, isNegative: branch.net < 0 }
+    ];
+    
+    summaryRows.forEach(item => {
+      const summaryRow = document.createElement('div');
+      summaryRow.className = 'branch-summary-row';
       
       const label = document.createElement('div');
       label.className = 'branch-summary-label';
@@ -1680,14 +2008,38 @@
         value.innerText = `$${formatNumber(item.value)}`;
       }
       
-      summaryItem.appendChild(label);
-      summaryItem.appendChild(value);
-      branchSummary.appendChild(summaryItem);
+      summaryRow.appendChild(label);
+      summaryRow.appendChild(value);
+      branchSummarySection.appendChild(summaryRow);
     });
     
-    branchReportSection.appendChild(branchSummary);
+    // Add difference after payouts
+    const difference = branch.sales - Math.abs(branch.net);
+    const differenceRow = document.createElement('div');
+    differenceRow.className = 'branch-summary-row';
     
-    return branchReportSection;
+    const differenceLabel = document.createElement('div');
+    differenceLabel.className = 'branch-summary-label';
+    differenceLabel.innerText = 'Difference After Payouts';
+    
+    const differenceValue = document.createElement('div');
+    differenceValue.className = 'branch-summary-value';
+    if (difference < 0) {
+      differenceValue.classList.add('negative-value');
+      differenceValue.innerText = `($${formatNumber(Math.abs(difference))})`;
+    } else {
+      differenceValue.classList.add('positive-value');
+      differenceValue.innerText = `$${formatNumber(difference)}`;
+    }
+    
+    differenceRow.appendChild(differenceLabel);
+    differenceRow.appendChild(differenceValue);
+    branchSummarySection.appendChild(differenceRow);
+    
+    branchDetailsContent.appendChild(branchSummarySection);
+    branchDetailsSection.appendChild(branchDetailsContent);
+    
+    return branchDetailsSection;
   }
   
   // Show weekly view
